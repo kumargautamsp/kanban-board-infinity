@@ -36,7 +36,7 @@ const EditTaskForm = ({ task, onTaskUpdated }: EditTaskFormProps) => {
     });
 
     setLoading(false);
-    onTaskUpdated(); // Trigger callback after task is updated
+    onTaskUpdated(); 
   };
 
   return (

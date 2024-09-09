@@ -10,12 +10,18 @@ import { app } from "@/firebase";
 import { RiEdit2Fill } from "react-icons/ri";
 import EditTaskForm from "./EditTaskForm";
 interface TaskCardProps {
+  fetchAllTasks: () => void;
   task: Task;
   setActiveCard: (card: Task | null) => void;
   activeCard: Task | null;
 }
 
-const TaskCard = ({ task, setActiveCard, activeCard }: TaskCardProps) => {
+const TaskCard = ({
+  task,
+  setActiveCard,
+  activeCard,
+  fetchAllTasks,
+}: TaskCardProps) => {
   const [showChangeStatus, setShowChangeStatus] = useState(false);
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
   const db = getFirestore(app);
@@ -24,18 +30,21 @@ const TaskCard = ({ task, setActiveCard, activeCard }: TaskCardProps) => {
     if (!task.id) return;
     const taskDocRef = doc(db, "tasks", task.id);
     await deleteDoc(taskDocRef);
+    fetchAllTasks();
   };
 
   const handleEdit = () => {
-    setIsEditModalVisible(true); 
+    setIsEditModalVisible(true);
   };
 
   const handleModalClose = () => {
     setIsEditModalVisible(false);
+    fetchAllTasks();
   };
 
   const handleTaskUpdated = () => {
-    setIsEditModalVisible(false); 
+    setIsEditModalVisible(false);
+    fetchAllTasks();
   };
 
   return (
@@ -70,6 +79,7 @@ const TaskCard = ({ task, setActiveCard, activeCard }: TaskCardProps) => {
             {showChangeStatus && (
               <div className="absolute top-full left-[-90px] z-10 w-[250px]">
                 <ChangeStatus
+                  fetchAllTasks={fetchAllTasks}
                   onStatusChange={() => {
                     setShowChangeStatus(false);
                   }}
@@ -102,7 +112,7 @@ const TaskCard = ({ task, setActiveCard, activeCard }: TaskCardProps) => {
         title="Edit Task"
         visible={isEditModalVisible}
         footer={null}
-        onCancel={handleModalClose} 
+        onCancel={handleModalClose}
       >
         <EditTaskForm task={task} onTaskUpdated={handleTaskUpdated} />
       </Modal>

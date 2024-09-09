@@ -2,6 +2,7 @@ import TaskCard from "./TaskCard";
 import { Task, TaskList } from "../types/task";
 import DropArea from "./DropArea";
 interface TaskStatusCardProps {
+  fetchAllTasks: () => void;
   title: string;
   tasks: TaskList;
   bgColor?: string;
@@ -11,22 +12,37 @@ interface TaskStatusCardProps {
   status: string;
 }
 
-const TaskStatusCard = ({ title, tasks, bgColor, setActiveCard, activeCard, onDrop, status }: TaskStatusCardProps) => {
+const TaskStatusCard = ({
+  title,
+  tasks,
+  bgColor,
+  setActiveCard,
+  activeCard,
+  onDrop,
+  status,
+  fetchAllTasks,
+}: TaskStatusCardProps) => {
   return (
     <div className="bg-transparent m-8">
-      <div className={`${bgColor} flex justify-center items-center rounded-t-[15px] py-3`}>
+      <div
+        className={`${bgColor} flex justify-center items-center rounded-t-[15px] py-3`}
+      >
         <h2 className="text-lg font-semibold text-white">{title}</h2>
       </div>
       <div className="bg-white p-6 rounded-b-lg border-x border-b border-slate-100">
-        <DropArea onDrop={() => onDrop(status, 0)}/>
+        <DropArea onDrop={() => onDrop(status, 0)} />
         {tasks.map((task, index) => (
-          <div key={index}> 
-          <TaskCard task={task} setActiveCard={setActiveCard} activeCard={activeCard} />
-          <DropArea onDrop={() => onDrop(task.status, index+1)}/>
-        </div>
+          <div key={index}>
+            <TaskCard
+              task={task}
+              fetchAllTasks={fetchAllTasks}
+              setActiveCard={setActiveCard}
+              activeCard={activeCard}
+            />
+            <DropArea onDrop={() => onDrop(task.status, index + 1)} />
+          </div>
         ))}
       </div>
-      
     </div>
   );
 };

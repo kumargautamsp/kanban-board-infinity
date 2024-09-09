@@ -28,10 +28,12 @@ const TaskBoard: React.FC = () => {
 
   const handleCloseModal = () => {
     setIsModalVisible(false);
+    fetchAllTasks();
   };
 
   const fetchAllTasks = async () => {
     try {
+      console.log("fethcingTask ...");
       const db = getFirestore(app);
       const taskCollection = collection(db, "tasks");
       const taskSnapshot = await getDocs(taskCollection);
@@ -83,18 +85,20 @@ const TaskBoard: React.FC = () => {
 
   useEffect(() => {
     fetchAllTasks();
-  }, [todo, inProgress, completed]);
-
+  }, []);
 
   const onDrop = async (status: string, position: number) => {
-    if (!activeCard || activeCard.status === status) return; 
+    if (!activeCard || activeCard.status === status) return;
 
     try {
       if (!activeCard || !activeCard.id) return;
       const db = getFirestore(app);
-      const taskRef = doc(db, "tasks", activeCard.id); 
-      await updateDoc(taskRef, { status }); 
-      console.log(`${activeCard.title} is dragged to ${status} at position ${position}`);
+      const taskRef = doc(db, "tasks", activeCard.id);
+      await updateDoc(taskRef, { status });
+      console.log(
+        `${activeCard.title} is dragged to ${status} at position ${position}`
+      );
+      fetchAllTasks();
     } catch (error) {
       console.error("Error updating task status: ", error);
     }
@@ -114,13 +118,14 @@ const TaskBoard: React.FC = () => {
       </div>
       {isModalVisible && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-10">
-          <CreateTask onClose={handleCloseModal}  />
+          <CreateTask onClose={handleCloseModal} />
         </div>
       )}
       <div className="grid grid-cols-3 gap-3 mt-8">
         {}
         <div className="bg-transparent p-4">
           <TaskStatusCard
+            fetchAllTasks={fetchAllTasks}
             title="TODO"
             tasks={todo}
             bgColor="bg-purple-700"
@@ -134,6 +139,7 @@ const TaskBoard: React.FC = () => {
         {}
         <div className="bg-transparent p-4">
           <TaskStatusCard
+            fetchAllTasks={fetchAllTasks}
             title="IN PROGRESS"
             tasks={inProgress}
             bgColor="bg-yellow-500"
@@ -147,6 +153,7 @@ const TaskBoard: React.FC = () => {
         {}
         <div className="bg-transparent p-4">
           <TaskStatusCard
+            fetchAllTasks={fetchAllTasks}
             title="COMPLETED"
             tasks={completed}
             bgColor="bg-green-500"

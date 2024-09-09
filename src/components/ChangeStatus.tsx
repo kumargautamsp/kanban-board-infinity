@@ -5,12 +5,14 @@ import { app } from "@/firebase";
 type Status = "todo" | "in-progress" | "completed";
 
 interface ChangeStatusProps {
+  fetchAllTasks: () => void;
   docId: string;
   currentStatus: Status;
   onStatusChange?: (status: Status) => void;
 }
 
 const ChangeStatus: React.FC<ChangeStatusProps> = ({
+  fetchAllTasks,
   docId,
   currentStatus,
   onStatusChange,
@@ -35,6 +37,7 @@ const ChangeStatus: React.FC<ChangeStatusProps> = ({
       }
 
       console.log(`Status updated to ${status} for docId: ${docId}`);
+      fetchAllTasks();
     } catch (error) {
       console.error("Error updating status: ", error);
     }
