@@ -114,7 +114,7 @@ const TaskBoard: React.FC = () => {
       </div>
       {isModalVisible && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-10">
-          <CreateTask onClose={handleCloseModal} setIsModalVisible = {setIsModalVisible} />
+          <CreateTask onClose={handleCloseModal}  />
         </div>
       )}
       <div className="grid grid-cols-3 gap-3 mt-8">
