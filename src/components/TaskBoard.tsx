@@ -113,12 +113,12 @@ const TaskBoard: React.FC = () => {
           className="bg-purple-700 px-5 py-6"
           onClick={handleCreateTaskClick}
         >
-          Create Task
+          Create Task 
         </Button>
       </div>
       {isModalVisible && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-10">
-          <CreateTask onClose={handleCloseModal} />
+          <CreateTask onClose={handleCloseModal} setIsModalVisible={setIsModalVisible} fetchAllTasks={fetchAllTasks}/>
         </div>
       )}
       <div className="grid grid-cols-3 gap-3 mt-8">

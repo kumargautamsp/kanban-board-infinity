@@ -7,6 +7,12 @@ import { Task } from "@/types/task";
 
 interface SubmitButtonProps {
   form: FormInstance;
+
+}
+
+interface CreateTaskFormProps {
+  setIsModalVisible: (value: boolean) => void;
+  fetchAllTasks: () => void;
 }
 
 const SubmitButton: React.FC<React.PropsWithChildren<SubmitButtonProps>> = ({
@@ -34,7 +40,7 @@ const SubmitButton: React.FC<React.PropsWithChildren<SubmitButtonProps>> = ({
   );
 };
 
-const CreateTaskForm: React.FC = () => {
+const CreateTaskForm: React.FC<CreateTaskFormProps> = ({ setIsModalVisible , fetchAllTasks})  => {
   const db = getFirestore(app);
   const [form] = Form.useForm();
 
@@ -50,7 +56,10 @@ const CreateTaskForm: React.FC = () => {
         description: description ? description : null,
       };
       const docRef = await addDoc(collection(db, "tasks"), formattedData); 
-      console.log("Document written with ID: ", docRef.id);
+      console.log("Document written with ID: ", docRef.id);   
+      
+      setIsModalVisible(false);
+      fetchAllTasks();
     } catch (error) {
       console.error("Error writing document: ", error);
       throw error;

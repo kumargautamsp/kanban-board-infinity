@@ -7,8 +7,10 @@ import { FaCirclePlus } from "react-icons/fa6";
 
 interface CreateTaskProps {
   onClose: () => void;
+  fetchAllTasks: () => void;
+  setIsModalVisible: (value: boolean) => void;
 }
-const CreateTask: React.FC<CreateTaskProps> = ({ onClose }) => {
+const CreateTask: React.FC<CreateTaskProps> = ({ onClose, setIsModalVisible, fetchAllTasks }) => {
   return (
     <div className="bg-slate-200 bg-opacity-50 w-full h-screen flex flex-col justify-center items-center">
       <div className="bg-white flex flex-col justify-center items-center p-6 rounded-lg w-[40%]">
@@ -24,7 +26,7 @@ const CreateTask: React.FC<CreateTaskProps> = ({ onClose }) => {
             <RxCross2 />
           </div>
         </div>
-        <CreateTaskForm />
+        <CreateTaskForm setIsModalVisible={setIsModalVisible} fetchAllTasks={fetchAllTasks} />
       </div>
     </div>
   );
