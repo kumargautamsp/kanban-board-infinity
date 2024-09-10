@@ -105,7 +105,7 @@ const TaskBoard: React.FC = () => {
   };
 
   return (
-    <div className=" bg-[#f7fafc] min-h-screen p-10">
+    <div className="bg-[#f7fafc] min-h-screen p-10">
       <div className="flex justify-between bg-white rounded-lg p-8 items-center">
         <h1 className="text-2xl font-bold">Desktop & Mobile Application</h1>
         <Button
@@ -121,7 +121,7 @@ const TaskBoard: React.FC = () => {
           <CreateTask onClose={handleCloseModal} setIsModalVisible={setIsModalVisible} fetchAllTasks={fetchAllTasks}/>
         </div>
       )}
-      <div className="grid grid-cols-3 gap-3 mt-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-8">
         {}
         <div className="bg-transparent p-4">
           <TaskStatusCard

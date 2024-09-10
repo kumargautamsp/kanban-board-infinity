@@ -103,8 +103,9 @@ const TaskCard = ({
             </p>
           </div>
           <div className="flex items-center gap-3 flex-row">
-            <RiEdit2Fill onClick={handleEdit} />
-            <FaTrash onClick={handleDelete} />
+           
+           <div className="cursor-pointer p-2 hover:bg-slate-200 rounded-md" onClick={handleEdit}> <RiEdit2Fill /> </div>
+            <div className="cursor-pointer p-2 hover:bg-slate-200 rounded-md" onClick={handleDelete}> <FaTrash /> </div>
           </div>
         </div>
       </Card>
